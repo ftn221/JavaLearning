@@ -1,7 +1,5 @@
 package org.example.lessonTwo;
 
-import java.util.Arrays;
-
 public class TaskOne {
 
     public static void main(String[] args) {
