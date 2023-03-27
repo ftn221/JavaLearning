@@ -1,4 +1,4 @@
-package org.example.LessonOne;
+package org.example.lessonOne;
 
 public class TaskTwo {
     public static void main(String[] args) {
