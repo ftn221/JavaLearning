@@ -3,15 +3,19 @@ package org.example.lessonThree;
 public class Cat extends Animal implements ShowInfo {
 
     private String runType;
-    private int age;
+    private static int age;
     public Cat(String name, int id, String type, String runType, int age) {
         super(name, id, type);
         this.runType = runType;
-        this.age = age;
+        Cat.age = age;
     }
 
-    public void sayAge() {
-        System.out.println("Мне уже " + age + " годика");
+    public static void sayAge() {
+        System.out.println("Сколько лет уже живу на свете: ");
+        for (int i = 0; i<= age; i++) {
+            System.out.println(i);
+        }
+        System.out.println("Целых " + age + " !");
     }
 
     @Override
