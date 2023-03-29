@@ -12,8 +12,6 @@ public class TaskFour {
         //счетчик, чтобы в третий массив цифры складывались друг за другом
         int actualElement = 0;
 
-
-
         Arrays.sort(arrOne);
         Arrays.sort(arrTwo);
 
