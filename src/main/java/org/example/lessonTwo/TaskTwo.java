@@ -13,6 +13,7 @@ public class TaskTwo {
 
     public static void counter() {
         if (count <= natural) {
+            //Выводим в консоль натуральное число
             System.out.println(count);
             count++;
             counter();
