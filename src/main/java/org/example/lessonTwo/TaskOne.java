@@ -21,7 +21,4 @@ public class TaskOne {
             System.out.println("Точка вне круга");
         }
     }
-
-
-
 }
