@@ -3,7 +3,7 @@ package org.example.lessonFour;
 public class checker {
 
     public static void main(String[] args) {
-        Boolean result = loginAndPasswordChecker("helllowwwww", "&^%&^%^%", "&^%&^%^%");
+        Boolean result = loginAndPasswordChecker("helllowwwww", "OhMyGod___", "OhMyGod___");
 
         if (result) {
             System.out.println("Ваши логин и пароль приняты!");
