@@ -1,6 +1,6 @@
 package org.example.lessonFive;
 
-public class Dog <T, S> extends Animal implements MakeVoice {
+public class Dog<T, S> extends Animal implements MakeVoice {
 
     private T voiceExample;
     private T runType;
@@ -24,4 +24,6 @@ public class Dog <T, S> extends Animal implements MakeVoice {
             System.out.println("По моему ты ошибся классом, друг.");
         }
     }
+
+    DiscriminantInterface<Double> discriminantCalculate = (a, b, c) -> ((Math.pow(b, 2)) - (4 * a * c));
 }

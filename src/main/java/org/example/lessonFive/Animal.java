@@ -1,6 +1,6 @@
 package org.example.lessonFive;
 
-public abstract class Animal <T, S> {
+public abstract class Animal<T, S> {
 
     protected T name;
     protected S id;
@@ -17,14 +17,14 @@ public abstract class Animal <T, S> {
         System.out.println("Моя порода: " + type);
     }
 
-    public void sayId () {
+    public void sayId() {
         System.out.println("Мой порядковый номер: " + id);
     }
 
-    public void byeBye () {
+    public void byeBye() {
         System.out.println("До свидания!!!");
         System.out.println();
     }
 
-    public abstract void run ();
+    public abstract void run();
 }

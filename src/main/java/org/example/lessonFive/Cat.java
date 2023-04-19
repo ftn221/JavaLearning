@@ -1,9 +1,10 @@
 package org.example.lessonFive;
 
-public class Cat <T, S> extends Animal implements ShowInfo {
+public class Cat<T, S> extends Animal implements ShowInfo<T> {
 
     private T runType;
     private static int age;
+
     public Cat(T name, S id, T type, T runType, int age) {
         super(name, id, type);
         this.runType = runType;
@@ -12,7 +13,7 @@ public class Cat <T, S> extends Animal implements ShowInfo {
 
     public static void sayAge() {
         System.out.println("Сколько лет уже живу на свете: ");
-        for (int i = 0; i<= age; i++) {
+        for (int i = 0; i <= age; i++) {
             System.out.println(i);
         }
         System.out.println("Целых " + age + " !");
@@ -24,7 +25,10 @@ public class Cat <T, S> extends Animal implements ShowInfo {
     }
 
     @Override
-    public void showInfo() {
-        System.out.println("Добрые люди подобрали меня на улице");
+    public T showInfo(T message) {
+        System.out.println(message);
+        return message;
     }
+
+    MyCheckAges<Integer> returnAge13Result = age -> (age % 13) == 0;
 }
