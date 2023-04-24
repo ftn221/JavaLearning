@@ -36,24 +36,10 @@ public class Test {
         printStudents(students, 4);
     }
 
-    //расчет средней оценки
-    public static double middleEstimation(ArrayList<Integer> estimates) {
-        double estimationSum = 0;
-        double middleEstimation = 0;
-
-        for (int estimate : estimates) {
-            estimationSum += estimate;
-        }
-
-        middleEstimation = estimationSum / estimates.size();
-
-        return middleEstimation;
-    }
-
     public static void removeBadStudent() {
         //создаем массив студентов не проходящих по среднему баллу меньше 3-х
         for (Student student : students) {
-            if (middleEstimation(student.getEstimates()) <= 3.0) {
+            if (student.getMiddleEstimation(student.getEstimates()) <= 3.0) {
                 badStudents.add(student);
             }
         }
@@ -63,15 +49,14 @@ public class Test {
     }
 
     public static void upgradeStudents() {
-        for (Student student : students) {
-            student.upgradeCourse();
-        }
+        students.stream().forEach(Student::upgradeCourse);
     }
 
     public static void printStudents(List<Student> students, int course) {
         for (Student student : students) {
             if (student.getCourse() == course) {
                 System.out.println(student.getName() + " " + "учится на курсе: " + student.getCourse());
+                System.out.println("Средний балл: " + student.getMiddleEstimation(student.getEstimates()));
             }
         }
     }

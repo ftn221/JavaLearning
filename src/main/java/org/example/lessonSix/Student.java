@@ -1,14 +1,14 @@
 package org.example.lessonSix;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Student {
     private String name;
     private int group;
     private int course;
-    private ArrayList<Integer> estimates;
+    private List<Integer> estimates;
 
-    public Student(String name, int group, int course, ArrayList<Integer> estimates) {
+    public Student(String name, int group, int course, List<Integer> estimates) {
         this.name = name;
         this.group = group;
         this.course = course;
@@ -27,11 +27,16 @@ public class Student {
         return course;
     }
 
-    public ArrayList<Integer> getEstimates() {
+    public List<Integer> getEstimates() {
         return estimates;
     }
 
     public void upgradeCourse() {
         this.course++;
+    }
+
+    public double getMiddleEstimation(List<Integer> estimates) {
+        int sum = estimates.stream().mapToInt(value -> value).sum();
+        return (double) sum / (estimates.size());
     }
 }
