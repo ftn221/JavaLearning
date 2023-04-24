@@ -36,7 +36,6 @@ public class Student {
     }
 
     public double getMiddleEstimation(List<Integer> estimates) {
-        int sum = estimates.stream().mapToInt(value -> value).sum();
-        return (double) sum / (estimates.size());
+        return estimates.stream().mapToInt(value -> value).average().orElse(-1);
     }
 }
