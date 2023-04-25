@@ -35,7 +35,7 @@ public class Student {
         this.course++;
     }
 
-    public double getMiddleEstimation(List<Integer> estimates) {
+    public double getMiddleEstimation() {
         return estimates.stream().mapToInt(value -> value).average().orElse(-1);
     }
 }

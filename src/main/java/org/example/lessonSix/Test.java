@@ -39,7 +39,7 @@ public class Test {
     public static void removeBadStudent() {
         //создаем массив студентов не проходящих по среднему баллу меньше 3-х
         for (Student student : students) {
-            if (student.getMiddleEstimation(student.getEstimates()) <= 3.0) {
+            if (student.getMiddleEstimation() <= 3.0) {
                 badStudents.add(student);
             }
         }
@@ -56,7 +56,7 @@ public class Test {
         for (Student student : students) {
             if (student.getCourse() == course) {
                 System.out.println(student.getName() + " " + "учится на курсе: " + student.getCourse());
-                System.out.println("Средний балл: " + student.getMiddleEstimation(student.getEstimates()));
+                System.out.println("Средний балл: " + student.getMiddleEstimation());
             }
         }
     }
