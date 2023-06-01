@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN"
+               packages="org.apache.logging.log4j.core,ru.hh.tests.functional.utils.logging">
+    <Properties>
+        <Property name="test-output.path">test-output</Property>
+        <Property name="test-output.logs.path">${sys:test-output.path}/logs</Property>
+    </Properties>
+
+    <Appenders>
+        <!--Because testNG can execute tests and factory instances in different threads all logs that will be written in single file will be unreadable,
+            so we must write each of them to new file. To do that we use log4j2 Routing which can create new appender on every ThreadContext specified key new value,
+            which we create in LoggerListener every time for every new thread instance-->
+        <Routing name="Routing">
+            <Routes pattern="$${ctx:RoutingKey}">
+                <Route key="$${ctx:RoutingKey}">
+                    <File name="DebugRoute" fileName="${sys:test-output.logs.path}/debugRouting.log" append="false">
+                        <PatternLayout pattern="%d{ABSOLUTE} %5p %t %M:%L - %m%n"/>
+                    </File>
+                </Route>
+                <Route>
+                    <File name="Debug-${ctx:RoutingKey}" fileName="${sys:test-output.logs.path}/${ctx:RoutingKey}.log"
+                          append="false">
+                        <PatternLayout pattern="%d{ABSOLUTE} %p %X{testName} %C{1}#%M:%L - %m%n"/>
+                    </File>
+                </Route>
+            </Routes>
+            <IdlePurgePolicy timeToLive="2" timeUnit="minutes"/>
+        </Routing>
+        <Routing name="SimpleHtmlRouting">
+            <Routes pattern="$${ctx:SimpleRoutingKey}">
+                <Route key="$${ctx:SimpleRoutingKey}">
+                    <File name="DebugRoute" fileName="${sys:test-output.logs.path}/simpleDebugRouting.log"
+                          append="false">
+                        <PatternLayout pattern="%d{ABSOLUTE} %t %m%n"/>
+                    </File>
+                </Route>
+                <Route>
+                    <File name="Simple-${ctx:SimpleRoutingKey}"
+                          fileName="${sys:test-output.logs.path}/${ctx:SimpleRoutingKey}.log" append="false">
+                        <HtmlPatternLayout pattern="%d{ABSOLUTE} %m%n"/>
+                    </File>
+                </Route>
+            </Routes>
+            <IdlePurgePolicy timeToLive="2" timeUnit="minutes"/>
+        </Routing>
+
+        <File name="DebugTest" fileName="${sys:test-output.logs.path}/debug.log" append="false">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p %t %c{1}:%M:%L - %m%n"/>
+        </File>
+        <File name="findTimeout" fileName="${sys:test-output.logs.path}/findTimeout.log" append="false"
+              immediateFlush="false">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p %t %c{1}:%M:%L - %m%n"/>
+        </File>
+        <File name="statsTimeout" fileName="${sys:test-output.logs.path}/statsTimeout.log" append="false"
+              immediateFlush="false">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p %t %c{1}:%M:%L - %m%n"/>
+        </File>
+        <File name="fuzzing" fileName="${sys:test-output.logs.path}/fuzzing.log" append="false"
+              immediateFlush="true">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p %t %c{1}:%M:%L - %m%n"/>
+        </File>
+        <File name="fuzzingError" fileName="${sys:test-output.logs.path}/fuzzingError.log" append="false"
+              immediateFlush="true">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p %t %c{1}:%M:%L - %m%n"/>
+        </File>
+        <File name="Kraken" fileName="${sys:test-output.path}/kraken.log" append="false" immediateFlush="true">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p %t %M:%L - %m%n"/>
+        </File>
+        <File name="Throttle" fileName="${sys:test-output.path}/k8sthrottle.log" append="false" immediateFlush="true">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p %t %M:%L - %m%n"/>
+        </File>
+        <File name="BrowserLogs" fileName="${sys:test-output.logs.path}/browser.log" append="false"
+              immediateFlush="true">
+            <PatternLayout pattern="%d{ABSOLUTE} - %m%n"/>
+        </File>
+        <File name="PerformanceBrowserLogs" fileName="${sys:test-output.logs.path}/performance_browser.log"
+              append="false" immediateFlush="true">
+            <PatternLayout pattern="%d{ABSOLUTE} - %m%n"/>
+        </File>
+        <File name="RidMap" fileName="${sys:test-output.logs.path}/ridMap.log"
+              append="false" immediateFlush="true">
+            <PatternLayout pattern="%m%n"/>
+        </File>
+        <File name="HeatLog" fileName="${sys:test-output.logs.path}/heat.log" append="false" immediateFlush="true">
+            <PatternLayout pattern="%d{ABSOLUTE} - %m%n"/>
+        </File>
+        <File name="Generator" fileName="${sys:test-output.path}/generator.log" append="false" immediateFlush="true">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p %t %M:%L - %m%n"/>
+        </File>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p %m%n"/>
+        </Console>
+        <!--        <Raven name="Sentry">-->
+        <!--            <dsn>-->
+        <!--                https://b4adbb2ba4c8413dbe0ef71f2ae7223c:fe1ec4e9adae44328ea8a7451d2bd438@sentry.pyn.ru/56?raven.timeout=10000&amp;raven.async.priority=10-->
+        <!--            </dsn>-->
+        <!--            <tags>-->
+        <!--                &lt;!&ndash;test.branch:${test.branch},stand.host:${stand.host}&ndash;&gt;-->
+        <!--            </tags>-->
+        <!--            <ravenFactory>-->
+        <!--                com.getsentry.raven.DefaultRavenFactory-->
+        <!--            </ravenFactory>-->
+        <!--            <extraTags>-->
+        <!--                branch,stand,testName,className,folderName-->
+        <!--            </extraTags>-->
+        <!--        </Raven>-->
+    </Appenders>
+
+    <Loggers>
+        <Logger name="Kraken" level="INFO">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="Kraken"/>
+        </Logger>
+        <Logger name="Throttle" level="INFO">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="Throttle"/>
+        </Logger>
+        <Logger name="Generator" level="INFO">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="Generator"/>
+        </Logger>
+        <Logger name="BrowserLogs" level="INFO">
+            <AppenderRef ref="BrowserLogs"/>
+        </Logger>
+        <Logger name="PerformanceBrowserLogs" level="INFO">
+            <AppenderRef ref="PerformanceBrowserLogs"/>
+        </Logger>
+        <Logger name="HeatLog" level="INFO">
+            <AppenderRef ref="HeatLog"/>
+        </Logger>
+        <Logger name="RigLog" level="INFO">
+            <AppenderRef ref="RidMap"/>
+        </Logger>
+        <Logger name="org.apache" level="WARN"/>
+        <Logger name="org.apache.http.wire" level="ERROR"/>
+
+        <!--see https://issues.apache.org/jira/browse/BEANUTILS-477-->
+        <Logger name="org.apache.commons.beanutils" level="ERROR"/>
+
+        <!--uncomment for logging http headers, host ip etc-->
+        <!--<Logger name="org.apache.http" level="DEBUG"/>-->
+
+        <!-- для отладки работы плагина, начнет логировать если выключить биндинг slf4j-nop в помнике (вместо него нормальный подтянется) -->
+        <Logger name="com.getsentry.raven" level="DEBUG"/>
+
+        <Logger name="findTimeout" level="WARN">
+            <AppenderRef ref="findTimeout" level="WARN"/>
+        </Logger>
+        <Logger name="statsTimeout" level="INFO">
+            <AppenderRef ref="statsTimeout" level="INFO"/>
+        </Logger>
+        <Logger name="fuzzing" level="INFO">
+            <AppenderRef ref="fuzzing" level="INFO"/>
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+        <Logger name="fuzzingError" level="ERROR">
+            <AppenderRef ref="fuzzingError" level="ERROR"/>
+        </Logger>
+        <Logger name="BaseClassLogger" level="DEBUG">
+            <AppenderRef ref="Routing" level="DEBUG"/>
+            <AppenderRef ref="SimpleHtmlRouting" level="DEBUG"/>
+        </Logger>
+
+        <Root>
+            <AppenderRef ref="DebugTest" level="DEBUG"/>
+            <!--            <AppenderRef ref="Sentry" level="WARN"/>-->
+        </Root>
+    </Loggers>
+
+</Configuration>

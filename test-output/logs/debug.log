@@ -1,0 +1,6 @@
+11:00:00,188 DEBUG main BaseClassLogger:setUp:24 - Открываем главную страницу Google
+11:00:02,027 DEBUG main BaseClassLogger:mainPageInputIsPresent:36 - Проверяем наличие поля ввода на странице
+11:00:02,056 DEBUG main BaseClassLogger:typeSearchRequest:42 - Вводим данные в поисковую строку
+11:00:02,145 DEBUG main BaseClassLogger:searchAction:51 - Нажимаем ENTER на главной странице поиска
+11:00:05,548 DEBUG main BaseClassLogger:searchPageResultTitlePresent:58 - Проверяем наличие информации о количестве найденных результатов поиска
+11:00:05,590 DEBUG main BaseClassLogger:close:31 - Закрываем браузер
