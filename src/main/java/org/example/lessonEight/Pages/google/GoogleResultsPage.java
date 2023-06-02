@@ -19,7 +19,7 @@ public class GoogleResultsPage extends BasePage {
   private final By resultCounterTitle = By.id("result-stats");
 
   public void searchPageResultTitlePresent() {
-    logger.log(Level.INFO, "Проверяем наличие информации о количестве найденных результатов поиска");
+    logger.log(Level.DEBUG, "Проверяем наличие информации о количестве найденных результатов поиска");
     WebElement element = driver.findElement(resultCounterTitle);
     waitWebElementIsVisible(element);
 
