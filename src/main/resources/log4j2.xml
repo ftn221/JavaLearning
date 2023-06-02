@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN"
+               packages="org.apache.logging.log4j.core,ru.hh.tests.functional.utils.logging">
+    <Properties>
+        <Property name="test-output.path">test-output</Property>
+        <Property name="test-output.logs.path">${sys:test-output.path}/logs</Property>
+    </Properties>
+
+    <Appenders>
+        <Routing name="Routing">
+            <Routes pattern="$${ctx:RoutingKey}">
+                <Route>
+                    <File name="Debug-${ctx:RoutingKey}" fileName="${sys:test-output.logs.path}/${ctx:RoutingKey}.log"
+                          append="false">
+                        <PatternLayout pattern="%d{ABSOLUTE} %p %X{testName} %C{1}#%M:%L - %m%n"/>
+                    </File>
+                </Route>
+            </Routes>
+            <IdlePurgePolicy timeToLive="2" timeUnit="minutes"/>
+        </Routing>
+
+        <File name="DebugTest" fileName="${sys:test-output.logs.path}/debug.log" append="false">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p %t %c{1}:%M:%L - %m%n"/>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="BaseClassLogger" level="DEBUG">
+            <AppenderRef ref="Routing" level="DEBUG"/>
+        </Logger>
+
+        <Root>
+            <AppenderRef ref="DebugTest" level="DEBUG"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
